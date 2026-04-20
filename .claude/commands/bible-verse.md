@@ -1,13 +1,13 @@
 # 聖經經節擷取技巧
 
-此 skill 記錄從 `db/Bible20240820.sqlite` 擷取中文聖經經節（恢復本）的完整知識，包含資料庫結構、查詢邏輯、上標插入演算法，以及 Markdown 輸出格式。
+此 skill 記錄從 `db/bible.sqlite` 擷取中文聖經經節（恢復本）的完整知識，包含資料庫結構、查詢邏輯、上標插入演算法，以及 Markdown 輸出格式。
 
 ---
 
 ## 資料庫位置
 
 ```
-db/Bible20240820.sqlite
+db/bible.sqlite
 ```
 
 ---
@@ -216,7 +216,7 @@ python3 extract_verses.py
 import sqlite3
 from collections import defaultdict
 
-con = sqlite3.connect("db/Bible20240820.sqlite")
+con = sqlite3.connect("db/bible.sqlite")
 
 # 單節查詢 — 創 1:1
 book, ch, seg = 1, 1, 1
