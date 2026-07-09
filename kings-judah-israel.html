@@ -1,33 +1,17 @@
-<title>猶大與以色列列王關係圖 · 列王紀上下</title>
+<title>猶大與以色列列王時間軸 · 列王紀上下</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
-    /* ── neutrals: warm limestone, biased cool toward Judah's lapis ── */
-    --ground:#e7e2d6;
-    --panel:#f1ece1;
-    --panel-2:#eae4d6;
-    --ink:#221d15;
-    --ink-soft:#5b5344;
-    --ink-faint:#8a806c;
-    --rule:#cdc4b0;
-    --rule-soft:#dad2c0;
-    /* ── the two lines ── */
-    --judah:#26407a;        /* lapis / royal Davidic blue */
-    --judah-deep:#1b2f5c;
-    --judah-tint:#dfe2ee;
-    --israel:#9c5326;       /* oxidized bronze / golden-calf copper */
-    --israel-deep:#6f3a18;
-    --israel-tint:#efe2d3;
-    --gold:#b0812f;         /* temple gold */
-    /* ── verdict semantics (separate from line hues) ── */
-    --right:#4f6b3a;        /* did right in the LORD's eyes */
-    --right-bg:#e2e7d6;
-    --evil:#a3402f;         /* did evil */
-    --evil-bg:#eddcd6;
-    --mixed:#a9822f;        /* right, but... */
-    --mixed-bg:#ede2cd;
+    --ground:#e7e2d6; --panel:#f1ece1; --panel-2:#eae4d6;
+    --ink:#221d15; --ink-soft:#5b5344; --ink-faint:#8a806c;
+    --rule:#cdc4b0; --rule-soft:#dad2c0;
+    --judah:#26407a; --judah-deep:#1b2f5c; --judah-tint:#dbe0ee;
+    --israel:#9c5326; --israel-deep:#6f3a18; --israel-tint:#eddcc9;
+    --gold:#b0812f;
+    --right:#4f6b3a; --right-bg:#e2e7d6;
+    --evil:#a3402f; --evil-bg:#eddcd6;
+    --mixed:#a9822f; --mixed-bg:#ede2cd;
     --shadow:rgba(40,32,18,.10);
-
     --serif:"Palatino Linotype","Book Antiqua","Iowan Old Style",Palatino,"Songti TC","Songti SC","Noto Serif CJK TC","Source Han Serif TC",Georgia,serif;
     --sans:"PingFang TC","Helvetica Neue","Segoe UI",system-ui,"Noto Sans CJK TC",sans-serif;
   }
@@ -36,277 +20,212 @@
       --ground:#161310; --panel:#201b15; --panel-2:#252017;
       --ink:#ece4d2; --ink-soft:#b3a88f; --ink-faint:#847a64;
       --rule:#3a3125; --rule-soft:#2c261c;
-      --judah:#7d97d6; --judah-deep:#9db2e6; --judah-tint:#232a3d;
-      --israel:#d38a52; --israel-deep:#e0a06c; --israel-tint:#33241a;
+      --judah:#7d97d6; --judah-deep:#a8bbe8; --judah-tint:#212a3d;
+      --israel:#d38a52; --israel-deep:#e6a672; --israel-tint:#33241a;
       --gold:#d0a24a;
       --right:#9cb37e; --right-bg:#242c1c;
       --evil:#d98470; --evil-bg:#331e19;
       --mixed:#cfa552; --mixed-bg:#2f2716;
-      --shadow:rgba(0,0,0,.4);
+      --shadow:rgba(0,0,0,.45);
     }
   }
   :root[data-theme="light"]{
     --ground:#e7e2d6; --panel:#f1ece1; --panel-2:#eae4d6;
     --ink:#221d15; --ink-soft:#5b5344; --ink-faint:#8a806c;
     --rule:#cdc4b0; --rule-soft:#dad2c0;
-    --judah:#26407a; --judah-deep:#1b2f5c; --judah-tint:#dfe2ee;
-    --israel:#9c5326; --israel-deep:#6f3a18; --israel-tint:#efe2d3;
+    --judah:#26407a; --judah-deep:#1b2f5c; --judah-tint:#dbe0ee;
+    --israel:#9c5326; --israel-deep:#6f3a18; --israel-tint:#eddcc9;
     --gold:#b0812f;
-    --right:#4f6b3a; --right-bg:#e2e7d6;
-    --evil:#a3402f; --evil-bg:#eddcd6;
-    --mixed:#a9822f; --mixed-bg:#ede2cd;
-    --shadow:rgba(40,32,18,.10);
+    --right:#4f6b3a; --right-bg:#e2e7d6; --evil:#a3402f; --evil-bg:#eddcd6;
+    --mixed:#a9822f; --mixed-bg:#ede2cd; --shadow:rgba(40,32,18,.10);
   }
   :root[data-theme="dark"]{
     --ground:#161310; --panel:#201b15; --panel-2:#252017;
     --ink:#ece4d2; --ink-soft:#b3a88f; --ink-faint:#847a64;
     --rule:#3a3125; --rule-soft:#2c261c;
-    --judah:#7d97d6; --judah-deep:#9db2e6; --judah-tint:#232a3d;
-    --israel:#d38a52; --israel-deep:#e0a06c; --israel-tint:#33241a;
+    --judah:#7d97d6; --judah-deep:#a8bbe8; --judah-tint:#212a3d;
+    --israel:#d38a52; --israel-deep:#e6a672; --israel-tint:#33241a;
     --gold:#d0a24a;
-    --right:#9cb37e; --right-bg:#242c1c;
-    --evil:#d98470; --evil-bg:#331e19;
-    --mixed:#cfa552; --mixed-bg:#2f2716;
-    --shadow:rgba(0,0,0,.4);
+    --right:#9cb37e; --right-bg:#242c1c; --evil:#d98470; --evil-bg:#331e19;
+    --mixed:#cfa552; --mixed-bg:#2f2716; --shadow:rgba(0,0,0,.45);
   }
 
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
-  body{
-    margin:0;background:var(--ground);color:var(--ink);
-    font-family:var(--serif);line-height:1.6;
-    font-feature-settings:"kern" 1;
-  }
-  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);line-height:1.6}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 
-  /* ─────────── Header ─────────── */
-  header.hero{
-    padding:64px 0 40px;border-bottom:1px solid var(--rule);
-    position:relative;overflow:hidden;
-  }
-  .eyebrow{
-    font-family:var(--sans);font-size:.72rem;letter-spacing:.32em;
-    text-transform:uppercase;color:var(--ink-faint);margin:0 0 18px;
-  }
-  .hero h1{
-    font-size:clamp(2.1rem,5.2vw,3.5rem);line-height:1.08;margin:0;
-    font-weight:600;letter-spacing:.01em;text-wrap:balance;
-  }
-  .hero h1 .amp{color:var(--gold);font-style:italic;padding:0 .12em}
-  .hero .sub{
-    margin:20px 0 0;max-width:60ch;color:var(--ink-soft);
-    font-size:1.06rem;text-wrap:pretty;
-  }
-  .split-note{
-    margin-top:30px;padding:18px 22px;border-radius:3px;
-    background:var(--panel);border:1px solid var(--rule);
-    display:flex;gap:16px;align-items:flex-start;max-width:70ch;
-  }
-  .split-note .glyph{font-size:1.4rem;color:var(--gold);line-height:1.2;flex:0 0 auto}
-  .split-note p{margin:0;font-size:.96rem;color:var(--ink-soft)}
-  .split-note strong{color:var(--ink);font-weight:600}
+  header.hero{padding:56px 0 34px;border-bottom:1px solid var(--rule)}
+  .eyebrow{font-family:var(--sans);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 16px}
+  .hero h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;margin:0;font-weight:600;letter-spacing:.01em;text-wrap:balance}
+  .hero h1 .amp{color:var(--gold);font-style:italic;padding:0 .1em}
+  .hero .sub{margin:18px 0 0;max-width:62ch;color:var(--ink-soft);font-size:1.04rem;text-wrap:pretty}
+  .hero .sub b{color:var(--ink)}
 
-  /* ─────────── Column heads ─────────── */
-  .kingdoms{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:44px}
-  .khead{padding:22px 26px;color:#fff;position:relative}
-  .khead.j{background:linear-gradient(135deg,var(--judah-deep),var(--judah));border-radius:4px 0 0 4px}
-  .khead.i{background:linear-gradient(225deg,var(--israel-deep),var(--israel));border-radius:0 4px 4px 0;text-align:right}
-  @media (prefers-color-scheme:dark){.khead{color:#100d09}}
-  :root[data-theme="dark"] .khead{color:#100d09}
-  :root[data-theme="light"] .khead{color:#fff}
-  .khead h2{margin:0;font-size:1.5rem;font-weight:600;letter-spacing:.03em}
-  .khead .rgn{font-family:var(--sans);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;opacity:.82;margin-top:4px}
-  .khead .stat{font-family:var(--sans);font-size:.82rem;margin-top:12px;opacity:.9}
-  .khead .stat b{font-variant-numeric:tabular-nums}
+  /* legend / how-to-read */
+  .guide{display:flex;flex-wrap:wrap;gap:20px 30px;margin-top:26px;padding:16px 20px;background:var(--panel);border:1px solid var(--rule);border-radius:4px}
+  .guide .gcol{display:flex;flex-direction:column;gap:7px;font-family:var(--sans);font-size:.8rem}
+  .guide .gt{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .guide .grow{display:flex;align-items:center;gap:8px;color:var(--ink-soft)}
+  .sw{width:14px;height:14px;border-radius:3px;flex:0 0 auto}
+  .sw.j{background:var(--judah-tint);border:1px solid var(--judah)}
+  .sw.i{background:var(--israel-tint);border:1px solid var(--israel)}
+  .stripe{width:5px;height:15px;border-radius:2px;flex:0 0 auto}
+  .stripe.r{background:var(--right)} .stripe.e{background:var(--evil)} .stripe.m{background:var(--mixed)}
+  .hbar{width:14px;flex:0 0 auto;background:var(--ink-faint);border-radius:2px}
 
-  /* ─────────── Controls ─────────── */
-  .controls{
-    position:sticky;top:0;z-index:20;background:var(--ground);
-    border-bottom:1px solid var(--rule);
-    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-    padding:14px 0;margin-top:8px;
-  }
-  .controls .lbl{font-family:var(--sans);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-right:4px}
-  .chip{
-    font-family:var(--sans);font-size:.82rem;cursor:pointer;
-    border:1px solid var(--rule);background:var(--panel);color:var(--ink-soft);
-    padding:6px 13px;border-radius:20px;transition:.15s;line-height:1;
-    display:inline-flex;align-items:center;gap:7px;
-  }
+  /* controls */
+  .controls{position:sticky;top:0;z-index:40;background:var(--ground);border-bottom:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:12px 0;margin-top:24px}
+  .controls .lbl{font-family:var(--sans);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-right:2px}
+  .chip{font-family:var(--sans);font-size:.82rem;cursor:pointer;border:1px solid var(--rule);background:var(--panel);color:var(--ink-soft);padding:6px 13px;border-radius:20px;transition:.15s;line-height:1;display:inline-flex;align-items:center;gap:7px}
   .chip:hover{border-color:var(--ink-faint)}
   .chip .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-  .chip.d-right .dot{background:var(--right)}
-  .chip.d-evil .dot{background:var(--evil)}
-  .chip.d-mixed .dot{background:var(--mixed)}
+  .chip.d-right .dot{background:var(--right)} .chip.d-evil .dot{background:var(--evil)} .chip.d-mixed .dot{background:var(--mixed)}
   .chip[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
-  .chip[aria-pressed="true"] .dot{outline:2px solid var(--ground);outline-offset:-1px}
   .chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 
-  /* ─────────── Timeline body ─────────── */
-  .timeline{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;padding:8px 0 20px}
-  .col{padding:26px 26px 60px;position:relative}
-  .col.j{border-right:1px solid var(--rule)}
-  /* dynastic spine */
-  .col.j::before,.col.i::before{
-    content:"";position:absolute;top:26px;bottom:60px;width:2px;
-  }
-  .col.j::before{right:-1px;background:linear-gradient(var(--judah),transparent)}
-  .col.i::before{left:-1px;background:linear-gradient(var(--israel),transparent)}
+  /* column captions above the track */
+  .heads{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:22px;min-width:600px}
+  .khead{padding:16px 20px;color:#fff}
+  .khead.j{background:linear-gradient(135deg,var(--judah-deep),var(--judah));border-radius:4px 0 0 4px}
+  .khead.i{background:linear-gradient(225deg,var(--israel-deep),var(--israel));border-radius:0 4px 4px 0;text-align:right}
+  :root[data-theme="dark"] .khead{color:#100d09} :root[data-theme="light"] .khead{color:#fff}
+  @media (prefers-color-scheme:dark){.khead{color:#100d09}}
+  .khead h2{margin:0;font-size:1.3rem;font-weight:600;letter-spacing:.03em}
+  .khead .rgn{font-family:var(--sans);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-top:3px}
 
-  .king{
-    position:relative;background:var(--panel);border:1px solid var(--rule);
-    border-radius:5px;padding:16px 18px;margin-bottom:16px;
-    box-shadow:0 1px 2px var(--shadow);transition:opacity .25s,transform .18s,box-shadow .18s;
-  }
-  .king:hover{box-shadow:0 6px 18px var(--shadow);transform:translateY(-1px)}
-  .col.j .king{border-left:4px solid var(--judah)}
-  .col.i .king{border-right:4px solid var(--israel)}
-  .king.dim{opacity:.24;filter:saturate(.5)}
+  /* timeline */
+  .tl-scroll{overflow-x:auto;padding-bottom:8px}
+  .track{position:relative;min-width:600px;margin-top:0}
 
-  .king .row1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-  .col.i .king .row1{flex-direction:row-reverse;text-align:right}
-  .ord{
-    font-family:var(--sans);font-variant-numeric:tabular-nums;
-    font-size:.74rem;font-weight:600;color:#fff;
-    background:var(--judah);border-radius:4px;padding:2px 7px;flex:0 0 auto;
-  }
-  .col.i .ord{background:var(--israel)}
-  @media (prefers-color-scheme:dark){.ord{color:#100d09}}
-  :root[data-theme="dark"] .ord{color:#100d09}
-  :root[data-theme="light"] .ord{color:#fff}
-  .kname{font-size:1.24rem;font-weight:600;letter-spacing:.01em}
-  .ken{font-family:var(--sans);font-size:.74rem;color:var(--ink-faint);letter-spacing:.04em}
+  .grid-line{position:absolute;left:0;right:0;border-top:1px solid var(--rule-soft);pointer-events:none}
+  .grid-line .yl{position:absolute;left:50%;transform:translateX(-50%);top:-9px;font-family:var(--sans);font-size:.68rem;font-variant-numeric:tabular-nums;color:var(--ink-faint);background:var(--ground);padding:0 6px}
+  .axis{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--rule);transform:translateX(-.5px)}
 
-  .meta{display:flex;gap:8px;align-items:center;margin:9px 0 0;flex-wrap:wrap}
-  .col.i .meta{flex-direction:row-reverse}
-  .reign{display:flex;align-items:baseline;gap:5px;font-family:var(--sans)}
-  .reign .yrs{font-size:1.44rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:.01em}
-  .reign .u{font-size:.74rem;color:var(--ink-faint)}
-  .bc{font-family:var(--sans);font-size:.72rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+  .lane{position:absolute;top:0}
+  .lane.j{left:0;width:calc(50% - 30px)}
+  .lane.i{right:0;width:calc(50% - 30px)}
 
-  .verdict{
-    font-family:var(--sans);font-size:.72rem;font-weight:600;
-    padding:3px 9px;border-radius:3px;letter-spacing:.02em;white-space:nowrap;
-  }
-  .v-right{color:var(--right);background:var(--right-bg)}
-  .v-evil{color:var(--evil);background:var(--evil-bg)}
-  .v-mixed{color:var(--mixed);background:var(--mixed-bg)}
+  .king{position:absolute;border-radius:4px;cursor:pointer;overflow:hidden;transition:opacity .2s,box-shadow .15s,transform .12s;box-shadow:0 1px 2px var(--shadow);display:flex;flex-direction:column;justify-content:center;padding:3px 9px}
+  .lane.j .king{right:0;width:100%;background:var(--judah-tint);color:var(--judah-deep);border-right:5px solid var(--right);align-items:flex-end;text-align:right}
+  .lane.i .king{left:0;width:100%;background:var(--israel-tint);color:var(--israel-deep);border-left:5px solid var(--right);align-items:flex-start}
+  .king[data-v="evil"]{border-color:var(--evil)!important}
+  .king[data-v="mixed"]{border-color:var(--mixed)!important}
+  .king[data-v="right"]{border-color:var(--right)!important}
+  .king:hover,.king.active{box-shadow:0 5px 16px var(--shadow);z-index:20;transform:scale(1.015)}
+  .king.active{outline:2px solid var(--gold);outline-offset:1px}
+  .king.dim{opacity:.2;filter:saturate(.4)}
+  .king .kn{font-weight:600;font-size:.94rem;line-height:1.15;white-space:nowrap}
+  .king .ky{font-family:var(--sans);font-size:.7rem;font-variant-numeric:tabular-nums;opacity:.82;line-height:1.2;margin-top:1px;white-space:nowrap}
+  .king.tiny{padding:0 6px}
+  .king.tiny .kn{font-size:.72rem} .king.tiny .ky{display:none}
+  .king.mini .kn,.king.mini .ky{display:none}
 
-  .deed{margin:11px 0 0;font-size:.95rem;color:var(--ink-soft);line-height:1.58;text-wrap:pretty}
-  .col.i .deed{text-align:right}
-  .deed .em{color:var(--ink);font-weight:600}
-  .deed .sin{color:var(--evil);font-style:italic}
+  /* exile block for fallen Israel */
+  .exile{position:absolute;left:0;width:100%;border-radius:4px;
+    background:repeating-linear-gradient(135deg,transparent,transparent 6px,var(--israel-tint) 6px,var(--israel-tint) 12px);
+    border:1px dashed var(--israel);color:var(--israel-deep);
+    display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--sans);font-size:.8rem;padding:8px}
 
-  .tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .col.i .tags{justify-content:flex-end}
-  .tag{
-    font-family:var(--sans);font-size:.68rem;letter-spacing:.04em;
-    padding:2px 8px;border-radius:20px;border:1px solid var(--rule);
-    color:var(--ink-faint);background:var(--panel-2);
-  }
-  .tag.coup{color:var(--israel);border-color:var(--israel);background:var(--israel-tint)}
-  .tag.prophet{color:var(--gold);border-color:var(--gold)}
-  .tag.dynasty{color:var(--judah);border-color:var(--judah);background:var(--judah-tint)}
-  .col.i .tag.dynasty{color:var(--israel);border-color:var(--israel);background:var(--israel-tint)}
+  /* center axis events */
+  .ev{position:absolute;left:0;right:0;pointer-events:none}
+  .ev .line{position:absolute;left:0;right:0;border-top:2px dashed;top:0}
+  .ev.fall722 .line{border-color:var(--israel)} .ev.fall586 .line{border-color:var(--judah)}
+  .ev .badge{position:absolute;left:50%;transform:translateX(-50%);top:-11px;font-family:var(--sans);font-size:.7rem;font-weight:700;color:#fff;padding:3px 10px;border-radius:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .ev.fall722 .badge{background:var(--israel)} .ev.fall586 .badge{background:var(--judah)}
+  :root[data-theme="dark"] .ev .badge{color:#100d09}
+  .ev.coup .badge{background:var(--gold);color:#fff;top:-10px;font-size:.66rem}
+  :root[data-theme="dark"] .ev.coup .badge{color:#100d09}
 
-  .ref{font-family:var(--sans);font-size:.7rem;color:var(--ink-faint);margin-top:9px;letter-spacing:.03em}
-  .col.i .ref{text-align:right}
+  /* prophet ministry spans in center gutter */
+  .pspan{position:absolute;left:50%;transform:translateX(-50%);width:20px;border-radius:10px;background:linear-gradient(var(--gold),transparent);opacity:.9;display:flex;align-items:flex-start;justify-content:center}
+  .pspan .pl{writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--sans);font-size:.66rem;letter-spacing:.12em;color:#fff;padding:6px 0;font-weight:600}
+  :root[data-theme="dark"] .pspan .pl{color:#1a140c}
 
-  /* fall banners */
-  .fall{
-    margin:6px 26px 0;padding:18px 20px;border-radius:5px;
-    border:1px dashed;position:relative;
-  }
-  .fall.j{border-color:var(--judah);background:var(--judah-tint)}
-  .fall.i{border-color:var(--israel);background:var(--israel-tint);text-align:right}
-  .fall .yr{font-family:var(--sans);font-weight:700;font-size:1.1rem;font-variant-numeric:tabular-nums}
-  .fall.j .yr{color:var(--judah-deep)}
-  .fall.i .yr{color:var(--israel-deep)}
-  .fall h3{margin:2px 0 6px;font-size:1.1rem;font-weight:600}
-  .fall p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+  /* fixed detail panel */
+  .detail{position:fixed;right:18px;bottom:18px;width:330px;max-width:calc(100vw - 36px);z-index:60;background:var(--panel);border:1px solid var(--rule);border-radius:8px;box-shadow:0 10px 34px var(--shadow);padding:18px 20px;transition:transform .2s,opacity .2s}
+  .detail .dtop{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .detail .dord{font-family:var(--sans);font-size:.72rem;font-weight:600;color:#fff;border-radius:4px;padding:2px 7px}
+  .detail .dord.j{background:var(--judah)} .detail .dord.i{background:var(--israel)}
+  :root[data-theme="dark"] .detail .dord{color:#100d09}
+  .detail .dn{font-size:1.24rem;font-weight:600}
+  .detail .den{font-family:var(--sans);font-size:.72rem;color:var(--ink-faint)}
+  .detail .dmeta{display:flex;gap:8px;align-items:center;margin:9px 0;flex-wrap:wrap;font-family:var(--sans)}
+  .detail .dyrs{font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums}
+  .detail .du{font-size:.72rem;color:var(--ink-faint)}
+  .detail .dbc{font-size:.72rem;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+  .detail .verdict{font-family:var(--sans);font-size:.7rem;font-weight:600;padding:3px 9px;border-radius:3px}
+  .v-right{color:var(--right);background:var(--right-bg)} .v-evil{color:var(--evil);background:var(--evil-bg)} .v-mixed{color:var(--mixed);background:var(--mixed-bg)}
+  .detail .dd{font-size:.92rem;color:var(--ink-soft);line-height:1.55;margin:6px 0 0}
+  .detail .dd .em{color:var(--ink);font-weight:600} .detail .dd .sin{color:var(--evil);font-style:italic}
+  .detail .dref{font-family:var(--sans);font-size:.7rem;color:var(--ink-faint);margin-top:9px}
+  .detail.hint{color:var(--ink-faint)}
+  .detail .hintt{font-family:var(--sans);font-size:.86rem;color:var(--ink-soft)}
+  @media (max-width:620px){.detail{right:8px;left:8px;bottom:8px;width:auto}}
 
-  /* ─────────── Prophet ledger ─────────── */
-  .prophets{margin:56px 0;padding:34px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  /* prophets + footer */
+  .prophets{margin:52px 0;padding:32px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
   .sec-eyebrow{font-family:var(--sans);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 6px}
-  .prophets h2,.legend-block h2{margin:0 0 22px;font-size:1.6rem;font-weight:600}
-  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
-  .pcard{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:4px;padding:15px 17px}
-  .pcard .pn{font-size:1.12rem;font-weight:600}
-  .pcard .pk{font-family:var(--sans);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin:3px 0 8px}
-  .pcard p{margin:0;font-size:.88rem;color:var(--ink-soft);line-height:1.55}
-
-  /* ─────────── closing note ─────────── */
-  footer{padding:40px 0 70px;color:var(--ink-faint);font-size:.86rem}
-  footer .lede{color:var(--ink-soft);font-size:1rem;max-width:64ch;font-style:italic;margin:0 0 18px}
-  footer .src{font-family:var(--sans);font-size:.76rem;letter-spacing:.03em}
-
-  @media (max-width:760px){
-    .kingdoms{grid-template-columns:1fr}
-    .khead.j,.khead.i{border-radius:4px 4px 0 0;text-align:left}
-    .khead.i{border-radius:0 0 4px 4px}
-    .timeline{grid-template-columns:1fr}
-    .col.j{border-right:none;border-bottom:1px solid var(--rule)}
-    .col.j::before{right:auto;left:-1px}
-    .col.i .king .row1,.col.i .meta,.col.i .tags{flex-direction:row}
-    .col.i .deed,.col.i .ref,.col.i .tags{text-align:left;justify-content:flex-start}
-    .col.i .king{border-right:4px solid var(--israel);border-left:none}
-    .fall.i{text-align:left}
-  }
+  .prophets h2{margin:0 0 20px;font-size:1.5rem;font-weight:600}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:15px}
+  .pcard{background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:4px;padding:14px 16px}
+  .pcard .pn{font-size:1.08rem;font-weight:600}
+  .pcard .pk{font-family:var(--sans);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:3px 0 8px}
+  .pcard p{margin:0;font-size:.86rem;color:var(--ink-soft);line-height:1.5}
+  footer{padding:36px 0 90px;color:var(--ink-faint);font-size:.86rem}
+  footer .lede{color:var(--ink-soft);font-size:1rem;max-width:64ch;font-style:italic;margin:0 0 16px}
+  footer .src{font-family:var(--sans);font-size:.75rem;letter-spacing:.03em;max-width:70ch}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">列王紀上 · 列王紀下 — 分裂王國的君王世系</p>
-    <h1>猶大 <span class="amp">與</span> 以色列<br>兩國列王關係圖</h1>
-    <p class="sub">所羅門之後，一個國分裂為二。南國<b>猶大</b>守著大衛的血脈，北國<b>以色列</b>另立王朝。兩條線並行三百多年，直到各自被擄。每位王的名下記著：作王年數、重點事蹟，以及「耶和華眼中看為正」或「看為惡」的定論。</p>
-    <div class="split-note">
-      <span class="glyph">✶</span>
-      <p><strong>分裂的根源（王上十一~十二）：</strong>所羅門年老時，隨從外邦妃嬪的偶像，心偏離耶和華。耶和華便將國從他兒子手中奪去十個支派。羅波安拒聽百姓、加重軛，北方十支派遂擁耶羅波安為王，自此南北分立。</p>
+    <p class="eyebrow">列王紀上 · 列王紀下 — 分裂王國時間軸</p>
+    <h1>猶大 <span class="amp">‖</span> 以色列<br>南北兩國君王時間軸</h1>
+    <p class="sub">所羅門之後一國分為二。這裡把<b>兩國放在同一條主前年代軸上並列</b>——左邊南國<b>猶大</b>（大衛家），右邊北國<b>以色列</b>。橫著看，就知道哪兩位王同時在位、彼此如何交涉；也一眼看出北國 <b>722</b> 亡於亞述後，南國仍獨存百餘年直到 <b>586</b> 亡於巴比倫。</p>
+    <div class="guide">
+      <div class="gcol">
+        <span class="gt">方塊底色＝屬哪一國</span>
+        <span class="grow"><span class="sw j"></span>猶大（南）</span>
+        <span class="grow"><span class="sw i"></span>以色列（北）</span>
+      </div>
+      <div class="gcol">
+        <span class="gt">邊條顏色＝耶和華的定論</span>
+        <span class="grow"><span class="stripe r"></span>行耶和華眼中看為正</span>
+        <span class="grow"><span class="stripe m"></span>行正，但有虧欠</span>
+        <span class="grow"><span class="stripe e"></span>行耶和華眼中看為惡</span>
+      </div>
+      <div class="gcol">
+        <span class="gt">方塊高度＝在位年數</span>
+        <span class="grow"><span class="hbar" style="height:9px"></span>短（數月～數年）</span>
+        <span class="grow"><span class="hbar" style="height:26px"></span>長（數十年）</span>
+        <span class="grow" style="color:var(--ink-faint)">點方塊看事蹟詳情 →</span>
+      </div>
     </div>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="kingdoms">
-    <div class="khead j">
-      <h2>猶大 · 南國</h2>
-      <div class="rgn">Judah — House of David · 耶路撒冷</div>
-      <div class="stat">大衛一脈，共 <b>20</b> 位君王 · 8 位行正、12 位行惡</div>
-    </div>
-    <div class="khead i">
-      <h2>以色列 · 北國</h2>
-      <div class="rgn">Israel — Samaria · 九個王朝</div>
-      <div class="stat">篡奪更替，共 <b>19</b> 位君王 · <b>全部</b>行耶和華眼中看為惡</div>
-    </div>
-  </div>
-
   <div class="controls" role="group" aria-label="按定論篩選">
-    <span class="lbl">篩選定論</span>
+    <span class="lbl">篩選</span>
     <button class="chip" data-filter="all" aria-pressed="true">全部</button>
-    <button class="chip d-right" data-filter="right" aria-pressed="false"><span class="dot"></span>行耶和華眼中看為正</button>
-    <button class="chip d-mixed" data-filter="mixed" aria-pressed="false"><span class="dot"></span>行正，但…</button>
-    <button class="chip d-evil" data-filter="evil" aria-pressed="false"><span class="dot"></span>行耶和華眼中看為惡</button>
+    <button class="chip d-right" data-filter="right" aria-pressed="false"><span class="dot"></span>行正</button>
+    <button class="chip d-mixed" data-filter="mixed" aria-pressed="false"><span class="dot"></span>行正但有虧欠</button>
+    <button class="chip d-evil" data-filter="evil" aria-pressed="false"><span class="dot"></span>行惡</button>
   </div>
 
-  <div class="timeline">
-    <div class="col j" id="col-j"></div>
-    <div class="col i" id="col-i"></div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0" class="falls">
-    <div class="fall j">
-      <div class="yr">主前 586</div>
-      <h3>猶大亡於巴比倫</h3>
-      <p>西底家背叛，尼布甲尼撒圍城，耶路撒冷與聖殿被焚，百姓被擄至巴比倫（王下廿五）。</p>
+  <div class="tl-scroll">
+    <div class="heads">
+      <div class="khead j"><h2>猶大 · 南國</h2><div class="rgn">House of David · 耶路撒冷 · 20 王</div></div>
+      <div class="khead i"><h2>以色列 · 北國</h2><div class="rgn">Samaria · 九個王朝 · 19 王 · 全數行惡</div></div>
     </div>
-    <div class="fall i">
-      <div class="yr">主前 722</div>
-      <h3>以色列亡於亞述</h3>
-      <p>何細亞背約，亞述王攻陷撒瑪利亞，以色列被擄；緣其棄耶和華、拜金牛犢（王下十七）。</p>
-    </div>
+    <div class="track" id="track"></div>
   </div>
 </div>
+
+<aside class="detail hint" id="detail" aria-live="polite">
+  <p class="hintt">在時間軸上<b>點選任一位王</b>，這裡會顯示他的作王年數、重點事蹟，以及耶和華看為罪的事。橫向對齊處即為同期在位的兩國君王。</p>
+</aside>
 
 <div class="wrap">
   <section class="prophets">
@@ -314,144 +233,157 @@
     <h2>興起的先知</h2>
     <div class="pgrid" id="pgrid"></div>
   </section>
-</div>
-
-<div class="wrap">
   <footer>
-    <p class="lede">「耶和華的眼目遍察全地。」南國有大衛的燈得存，北國自始至終未離耶羅波安的罪——兩條線並列，一部就是揀選、警戒與審判的歷史。</p>
-    <p class="src">資料來源：聖經恢復本 · 列王紀上下（王上 12 – 王下 25） · 作王年數皆取自經文明文記載 · 主前年代為學者推算之約數</p>
+    <p class="lede">「耶和華的眼目遍察全地。」南國有大衛的燈得存，北國自始至終未離耶羅波安的罪——兩線並列於同一時間，一部就是揀選、警戒與審判的歷史。</p>
+    <p class="src">資料來源：聖經恢復本 · 列王紀上下（王上 12 – 王下 25）。作王年數皆取自經文明文記載；主前年代為學者推算之約數（部分含攝政重疊，僅供對齊參考）。</p>
   </footer>
 </div>
 
 <script>
+/* s = 登基年(主前, 數字), e = 卸任/去世年 ; 年代為約數, 用於時間軸對齊 */
 const JUDAH=[
- {o:1,n:"羅波安",en:"Rehoboam",y:"17",bc:"約931–913",v:"evil",
-  d:"所羅門之子。因加重百姓的軛，致<em class='em'>國家分裂</em>。猶大人也<span class='sin'>築邱壇、立柱像、亞舍拉</span>，境內甚至有孌童。埃及王示撒上來，奪去聖殿與王宮的寶物。",ref:"王上 12–14",tags:["大衛家開始"]},
- {o:2,n:"亞比央",en:"Abijam",y:"3",bc:"約913–911",v:"evil",
-  d:"行他父親一切的罪，<span class='sin'>心不像大衛全然順服</span>。然而耶和華因大衛的緣故，仍賜燈光給他，使耶路撒冷得存。",ref:"王上 15"},
- {o:3,n:"亞撒",en:"Asa",y:"41",bc:"約911–870",v:"mixed",
-  d:"效法大衛<em class='em'>行耶和華眼中看為正的事</em>：除偶像、逐孌童，甚至<em class='em'>廢去太后瑪迦</em>（因她造可憎的偶像）。只是邱壇未除；晚年病足時求醫不求耶和華，又倚靠亞蘭王。",ref:"王上 15"},
- {o:4,n:"約沙法",en:"Jehoshaphat",y:"25",bc:"約870–848",v:"mixed",
-  d:"行正、尋求耶和華，境內平安。惟<span class='sin'>與亞哈家聯姻結盟</span>，同去攻打拉末，種下猶大的禍根。",ref:"王上 22 / 代下 17–20"},
- {o:5,n:"約蘭",en:"Jehoram",y:"8",bc:"約848–841",v:"evil",
-  d:"娶<span class='sin'>亞哈的女兒為妻</span>，行以色列諸王的道。以東背叛脫離猶大。",ref:"王下 8"},
- {o:6,n:"亞哈謝",en:"Ahaziah",y:"1",bc:"約841",v:"evil",
-  d:"亞他利雅之子，效法<span class='sin'>亞哈家的行為</span>。與以色列王同行，於耶戶除滅亞哈家時一併被殺。",ref:"王下 8–9"},
- {o:7,n:"亞他利雅",en:"Athaliah",y:"6",bc:"約841–835",v:"evil",
-  d:"亞哈與耶洗別之女，唯一的女性掌權者。<span class='sin'>剿滅王室後裔以篡位</span>——大衛的血脈幾乎斷絕，唯嬰孩約阿施被祭司暗藏得存。後被處死。",ref:"王下 11",tags:["篡位·非大衛裔"]},
- {o:8,n:"約阿施",en:"Joash",y:"40",bc:"約835–796",v:"mixed",
-  d:"七歲登基。<em class='em'>祭司耶何耶大在世時行正</em>，<em class='em'>重修聖殿</em>。耶何耶大死後便偏離，<span class='sin'>拜偶像、殺先知撒迦利亞</span>；終被臣僕所殺。",ref:"王下 11–12"},
- {o:9,n:"亞瑪謝",en:"Amaziah",y:"29",bc:"約796–767",v:"mixed",
-  d:"行正，但不如大衛全心，且<span class='sin'>邱壇未除、拜以東的神</span>。因驕傲向以色列挑戰而大敗，聖殿被掠。",ref:"王下 14"},
- {o:10,n:"亞撒利雅（烏西雅）",en:"Azariah / Uzziah",y:"52",bc:"約792–740",v:"mixed",
-  d:"在位最久的猶大王，國勢強盛、行正。惟<span class='sin'>擅入聖殿燒香、僭越祭司之職</span>，被耶和華擊打，<em class='em'>長大痲瘋直到死日</em>。",ref:"王下 15"},
- {o:11,n:"約坦",en:"Jotham",y:"16",bc:"約740–732",v:"mixed",
-  d:"行耶和華眼中看為正的事，建聖殿的上門。<span class='sin'>只是邱壇仍未廢去</span>，百姓仍在其上獻祭燒香。",ref:"王下 15"},
- {o:12,n:"亞哈斯",en:"Ahaz",y:"16",bc:"約732–716",v:"evil",
-  d:"大行惡事：效法外邦，<span class='sin'>使兒子經火</span>；仿大馬士革的樣式改造聖殿的壇；關閉殿門。求亞述相助，反受轄制。",ref:"王下 16"},
- {o:13,n:"希西家",en:"Hezekiah",y:"29",bc:"約716–687",v:"right",
-  d:"<em class='em'>行正如大衛</em>，倚靠耶和華，猶大諸王無人能比。<em class='em'>除邱壇、毀柱像、打碎摩西的銅蛇</em>；抵抗亞述圍城，蒙拯救；病得醫治、日影後退。",ref:"王下 18–20",tags:["大復興"]},
- {o:14,n:"瑪拿西",en:"Manasseh",y:"55",bc:"約697–643",v:"evil",
-  d:"在位最久、也是<em class='em'>最惡</em>的猶大王。<span class='sin'>重建邱壇、築巴力壇、拜天象、使兒子經火、行邪術、交鬼</span>，又流許多無辜人的血——招來耶和華定意除滅耶路撒冷。",ref:"王下 21"},
- {o:15,n:"亞們",en:"Amon",y:"2",bc:"約643–641",v:"evil",
-  d:"行他父親瑪拿西所行的惡，事奉偶像。被臣僕在宮中殺害。",ref:"王下 21"},
- {o:16,n:"約西亞",en:"Josiah",y:"31",bc:"約641–609",v:"right",
-  d:"<em class='em'>行正，不偏左右，如大衛</em>。修殿時<em class='em'>發現律法書</em>，撕裂衣服、大行改革：除盡偶像與邱壇、拆偶像祭司、<em class='em'>重守逾越節</em>。死於埃及法老尼哥之手。",ref:"王下 22–23",tags:["律法復興"]},
- {o:17,n:"約哈斯",en:"Jehoahaz",y:"3個月",bc:"約609",v:"evil",
-  d:"行惡如列祖。作王僅三月，被<span class='sin'>埃及王尼哥廢黜擄去</span>，死在埃及。",ref:"王下 23"},
- {o:18,n:"約雅敬",en:"Jehoiakim",y:"11",bc:"約609–598",v:"evil",
-  d:"埃及所立，後臣服巴比倫又背叛。行惡。<span class='sin'>巴比倫第一次來犯</span>，擄掠聖殿器皿與貴胄（含但以理）。",ref:"王下 23–24"},
- {o:19,n:"約雅斤",en:"Jehoiachin",y:"3個月",bc:"約598–597",v:"evil",
-  d:"行惡。作王三月，尼布甲尼撒圍城，<span class='sin'>與眾民、匠人一同被擄至巴比倫</span>；後在巴比倫得抬舉。",ref:"王下 24"},
- {o:20,n:"西底家",en:"Zedekiah",y:"11",bc:"約597–586",v:"evil",
-  d:"巴比倫所立的末代王。行惡，<span class='sin'>背叛尼布甲尼撒</span>。城破時眼見諸子被殺，隨即被剜目、鎖去巴比倫；<em class='em'>聖殿與耶路撒冷被焚，猶大亡國被擄</em>。",ref:"王下 24–25",tags:["猶大末王"]},
+ {o:1,n:"羅波安",en:"Rehoboam",y:"17",s:931,e:914,bc:"約931–914",v:"evil",d:"所羅門之子。因加重百姓的軛，致<em class='em'>國家分裂</em>。猶大人也<span class='sin'>築邱壇、立柱像、亞舍拉</span>。埃及王示撒上來，奪去聖殿與王宮的寶物。",ref:"王上 12–14"},
+ {o:2,n:"亞比央",en:"Abijam",y:"3",s:914,e:911,bc:"約914–911",v:"evil",d:"行他父親一切的罪，<span class='sin'>心不像大衛全然順服</span>。耶和華仍因大衛的緣故賜燈光，使耶路撒冷得存。",ref:"王上 15"},
+ {o:3,n:"亞撒",en:"Asa",y:"41",s:911,e:870,bc:"約911–870",v:"mixed",d:"效法大衛<em class='em'>行正</em>：除偶像、逐孌童，<em class='em'>廢去太后瑪迦</em>。只是邱壇未除；晚年病足求醫不求神，又倚靠亞蘭王。",ref:"王上 15"},
+ {o:4,n:"約沙法",en:"Jehoshaphat",y:"25",s:870,e:848,bc:"約870–848",v:"mixed",d:"行正、尋求耶和華，境內平安。惟<span class='sin'>與亞哈家聯姻結盟</span>，同去攻打拉末，種下猶大的禍根。",ref:"王上 22 / 代下 17–20"},
+ {o:5,n:"約蘭",en:"Jehoram",y:"8",s:848,e:841,bc:"約848–841",v:"evil",d:"娶<span class='sin'>亞哈的女兒為妻</span>，行以色列諸王的道。以東背叛脫離猶大。",ref:"王下 8"},
+ {o:6,n:"亞哈謝",en:"Ahaziah",y:"1",s:841,e:841,bc:"約841",v:"evil",d:"亞他利雅之子，效法<span class='sin'>亞哈家的行為</span>。於耶戶除滅亞哈家時一併被殺。",ref:"王下 8–9"},
+ {o:7,n:"亞他利雅",en:"Athaliah",y:"6",s:841,e:835,bc:"約841–835",v:"evil",d:"亞哈與耶洗別之女。<span class='sin'>剿滅王室後裔以篡位</span>——大衛血脈幾乎斷絕，唯嬰孩約阿施被暗藏得存。後被處死。",ref:"王下 11"},
+ {o:8,n:"約阿施",en:"Joash",y:"40",s:835,e:796,bc:"約835–796",v:"mixed",d:"七歲登基。<em class='em'>祭司耶何耶大在世時行正、重修聖殿</em>；其死後便偏離，<span class='sin'>拜偶像、殺先知撒迦利亞</span>，終被臣僕所殺。",ref:"王下 11–12"},
+ {o:9,n:"亞瑪謝",en:"Amaziah",y:"29",s:796,e:767,bc:"約796–767",v:"mixed",d:"行正，但不如大衛全心，且<span class='sin'>拜以東的神</span>。因驕傲向以色列挑戰而大敗，聖殿被掠。",ref:"王下 14"},
+ {o:10,n:"亞撒利雅（烏西雅）",en:"Azariah / Uzziah",y:"52",s:792,e:740,bc:"約792–740",v:"mixed",d:"在位最久的猶大王，國勢強盛、行正。惟<span class='sin'>擅入聖殿燒香、僭越祭司</span>，被擊打<em class='em'>長大痲瘋直到死日</em>。",ref:"王下 15"},
+ {o:11,n:"約坦",en:"Jotham",y:"16",s:750,e:732,bc:"約750–732",v:"mixed",d:"行正，建聖殿的上門。<span class='sin'>只是邱壇仍未廢去</span>，百姓仍在其上獻祭燒香。",ref:"王下 15"},
+ {o:12,n:"亞哈斯",en:"Ahaz",y:"16",s:732,e:716,bc:"約732–716",v:"evil",d:"大行惡事：<span class='sin'>使兒子經火</span>；仿大馬士革的樣式改造聖殿的壇；關閉殿門。求亞述相助，反受轄制。",ref:"王下 16"},
+ {o:13,n:"希西家",en:"Hezekiah",y:"29",s:716,e:687,bc:"約716–687",v:"right",d:"<em class='em'>行正如大衛</em>，倚靠耶和華無人能比。<em class='em'>除邱壇、毀柱像、打碎摩西的銅蛇</em>；抵抗亞述蒙拯救；病得醫治、日影後退。",ref:"王下 18–20"},
+ {o:14,n:"瑪拿西",en:"Manasseh",y:"55",s:687,e:643,bc:"約697–643",v:"evil",d:"在位最久、也是<em class='em'>最惡</em>的猶大王。<span class='sin'>重建邱壇、拜天象、使兒子經火、行邪術交鬼</span>，流許多無辜人的血——招來耶和華定意除滅耶路撒冷。",ref:"王下 21"},
+ {o:15,n:"亞們",en:"Amon",y:"2",s:643,e:641,bc:"約643–641",v:"evil",d:"行父親瑪拿西所行的惡，事奉偶像。被臣僕在宮中殺害。",ref:"王下 21"},
+ {o:16,n:"約西亞",en:"Josiah",y:"31",s:641,e:609,bc:"約641–609",v:"right",d:"<em class='em'>行正，不偏左右，如大衛</em>。修殿時<em class='em'>發現律法書</em>，大行改革：除盡偶像邱壇、<em class='em'>重守逾越節</em>。死於埃及法老尼哥之手。",ref:"王下 22–23"},
+ {o:17,n:"約哈斯",en:"Jehoahaz",y:"3個月",s:609,e:609,bc:"約609",v:"evil",d:"行惡如列祖。作王僅三月，被<span class='sin'>埃及王尼哥廢黜擄去</span>，死在埃及。",ref:"王下 23"},
+ {o:18,n:"約雅敬",en:"Jehoiakim",y:"11",s:609,e:598,bc:"約609–598",v:"evil",d:"埃及所立，後臣服巴比倫又背叛。<span class='sin'>巴比倫第一次來犯</span>，擄掠聖殿器皿與貴胄（含但以理）。",ref:"王下 23–24"},
+ {o:19,n:"約雅斤",en:"Jehoiachin",y:"3個月",s:598,e:597,bc:"約598–597",v:"evil",d:"行惡。作王三月，尼布甲尼撒圍城，<span class='sin'>與眾民、匠人一同被擄至巴比倫</span>。",ref:"王下 24"},
+ {o:20,n:"西底家",en:"Zedekiah",y:"11",s:597,e:586,bc:"約597–586",v:"evil",d:"巴比倫所立的末代王。<span class='sin'>背叛尼布甲尼撒</span>。城破被剜目、鎖去巴比倫；<em class='em'>聖殿與耶路撒冷被焚，猶大亡國被擄</em>。",ref:"王下 24–25"},
 ];
 const ISRAEL=[
- {o:1,n:"耶羅波安一世",en:"Jeroboam I",y:"22",bc:"約931–910",v:"evil",
-  d:"北國開國之君。恐百姓回耶路撒冷獻祭，便<span class='sin'>鑄兩隻金牛犢立於伯特利和但</span>，又立邱壇、以凡民為祭司、改節期——<em class='em'>「使以色列人陷在罪裡」</em>，成為後世諸王的定罪標記。",ref:"王上 12–14",tags:["王朝一·開國"]},
- {o:2,n:"拿答",en:"Nadab",y:"2",bc:"約910–909",v:"evil",
-  d:"行父親的道，走他使以色列陷在罪裡的路。被巴沙背叛所殺。",ref:"王上 15"},
- {o:3,n:"巴沙",en:"Baasha",y:"24",bc:"約909–886",v:"evil",
-  d:"篡位登基，<span class='sin'>殺盡耶羅波安全家</span>（應驗先知之言），自己卻仍行耶羅波安的罪。",ref:"王上 15–16",tags:["王朝二·政變"]},
- {o:4,n:"以拉",en:"Elah",y:"2",bc:"約886–885",v:"evil",
-  d:"巴沙之子。<span class='sin'>在家宰家中喝醉</span>時，被臣僕心利所殺。",ref:"王上 16"},
- {o:5,n:"心利",en:"Zimri",y:"7天",bc:"約885",v:"evil",
-  d:"作王僅七日。滅巴沙全家後，見城被圍，便<span class='sin'>焚王宮自焚而死</span>。",ref:"王上 16",tags:["政變·七日"]},
- {o:6,n:"暗利",en:"Omri",y:"12",bc:"約885–874",v:"evil",
-  d:"軍長出身，勝眾自立。<em class='em'>建撒瑪利亞為國都</em>。行惡<span class='sin'>比他以前的更甚</span>，立下影響深遠的暗利王朝。",ref:"王上 16",tags:["王朝四·建撒瑪利亞"]},
- {o:7,n:"亞哈",en:"Ahab",y:"22",bc:"約874–853",v:"evil",
-  d:"<em class='em'>行惡比一切在他以前的更甚</em>。娶西頓公主<span class='sin'>耶洗別</span>，為巴力築壇建廟、立亞舍拉；霸奪拿伯的葡萄園、殺其性命。先知<em class='em'>以利亞</em>與之對抗於迦密山。",ref:"王上 16–22",tags:["先知·以利亞"]},
- {o:8,n:"亞哈謝",en:"Ahaziah",y:"2",bc:"約853–852",v:"evil",
-  d:"事奉巴力如其父母。病時<span class='sin'>求問以革倫的神巴力西卜</span>，遭以利亞責言，必死在床上。",ref:"王下 1"},
- {o:9,n:"約蘭（耶何蘭）",en:"Joram",y:"12",bc:"約852–841",v:"evil",
-  d:"除去父親所造的巴力柱像，卻仍不離耶羅波安的罪。<em class='em'>以利沙</em>行神蹟的時期。被耶戶射殺，屍拋拿伯的田——應驗對亞哈家的判詞。",ref:"王下 3–9",tags:["先知·以利沙"]},
- {o:10,n:"耶戶",en:"Jehu",y:"28",bc:"約841–814",v:"mixed",
-  d:"奉膏興起，<em class='em'>剿滅亞哈全家、殺耶洗別、盡除巴力的崇拜與廟</em>。耶和華應許他四代坐位。然而<span class='sin'>仍不離金牛犢的罪</span>，未全心遵行。",ref:"王下 9–10",tags:["王朝五·滅巴力"]},
- {o:11,n:"約哈斯",en:"Jehoahaz",y:"17",bc:"約814–798",v:"evil",
-  d:"行耶羅波安的罪。<span class='sin'>受亞蘭王哈薛的欺壓</span>；懇求耶和華，蒙賜拯救者暫得喘息。",ref:"王下 13"},
- {o:12,n:"約阿施",en:"Jehoash",y:"16",bc:"約798–782",v:"evil",
-  d:"仍行耶羅波安的罪。<em class='em'>探望垂死的以利沙</em>，射箭得勝亞蘭的預言，三次擊敗亞蘭、收復失地。",ref:"王下 13"},
- {o:13,n:"耶羅波安二世",en:"Jeroboam II",y:"41",bc:"約793–753",v:"evil",
-  d:"在位最久、國勢最盛的北國王，<em class='em'>收復失地、疆域大展</em>（應驗約拿的話）。然而<span class='sin'>仍行使以色列陷在罪裡的惡</span>——阿摩司、何西阿於此時發預言。",ref:"王下 14"},
- {o:14,n:"撒迦利雅",en:"Zechariah",y:"6個月",bc:"約753",v:"evil",
-  d:"耶戶第四代。行惡。作王六月即被沙龍當眾刺殺——<em class='em'>耶和華對耶戶「四代」之言應驗</em>，暗利/耶戶王朝告終。",ref:"王下 15",tags:["耶戶王朝終"]},
- {o:15,n:"沙龍",en:"Shallum",y:"1個月",bc:"約752",v:"evil",
-  d:"弒君篡位，作王僅一月，隨即被米拿現所殺。",ref:"王下 15",tags:["政變·一月"]},
- {o:16,n:"米拿現",en:"Menahem",y:"10",bc:"約752–742",v:"evil",
-  d:"手段殘暴（<span class='sin'>剖開孕婦</span>）。行惡。<span class='sin'>向亞述王普勒進貢千他連得銀子</span>以穩固王位，開北國臣服亞述之端。",ref:"王下 15",tags:["王朝八·政變"]},
- {o:17,n:"比加轄",en:"Pekahiah",y:"2",bc:"約742–740",v:"evil",
-  d:"米拿現之子，行耶羅波安的罪。被軍長比加率黨在宮中殺害。",ref:"王下 15"},
- {o:18,n:"比加",en:"Pekah",y:"20",bc:"約752–732",v:"evil",
-  d:"篡位。行惡。其時<span class='sin'>亞述王提革拉毗列色擄掠北境諸城與加利利</span>，將百姓擄往亞述。後被何細亞所殺。",ref:"王下 15",tags:["亞述始擄"]},
- {o:19,n:"何細亞",en:"Hoshea",y:"9",bc:"約732–722",v:"evil",
-  d:"北國末王。行惡（稍輕於前王）。<span class='sin'>背叛亞述、暗通埃及</span>，遂被亞述王圍撒瑪利亞三年而破，<em class='em'>以色列亡國被擄</em>。",ref:"王下 17",tags:["以色列末王"]},
+ {o:1,n:"耶羅波安一世",en:"Jeroboam I",y:"22",s:931,e:910,bc:"約931–910",v:"evil",d:"北國開國之君。恐百姓回耶路撒冷獻祭，便<span class='sin'>鑄兩隻金牛犢立於伯特利和但</span>，立邱壇、以凡民為祭司——<em class='em'>「使以色列人陷在罪裡」</em>，成為後世諸王的定罪標記。",ref:"王上 12–14"},
+ {o:2,n:"拿答",en:"Nadab",y:"2",s:910,e:909,bc:"約910–909",v:"evil",d:"行父親的道，走使以色列陷在罪裡的路。被巴沙背叛所殺。",ref:"王上 15"},
+ {o:3,n:"巴沙",en:"Baasha",y:"24",s:909,e:886,bc:"約909–886",v:"evil",d:"篡位登基，<span class='sin'>殺盡耶羅波安全家</span>（應驗先知之言），自己卻仍行耶羅波安的罪。",ref:"王上 15–16"},
+ {o:4,n:"以拉",en:"Elah",y:"2",s:886,e:885,bc:"約886–885",v:"evil",d:"巴沙之子。<span class='sin'>在家宰家中喝醉</span>時，被臣僕心利所殺。",ref:"王上 16"},
+ {o:5,n:"心利",en:"Zimri",y:"7天",s:885,e:885,bc:"約885",v:"evil",d:"作王僅七日。滅巴沙全家後，見城被圍，便<span class='sin'>焚王宮自焚而死</span>。",ref:"王上 16"},
+ {o:6,n:"暗利",en:"Omri",y:"12",s:885,e:874,bc:"約885–874",v:"evil",d:"軍長出身，勝眾自立。<em class='em'>建撒瑪利亞為國都</em>。行惡<span class='sin'>比他以前的更甚</span>，立下影響深遠的暗利王朝。",ref:"王上 16"},
+ {o:7,n:"亞哈",en:"Ahab",y:"22",s:874,e:853,bc:"約874–853",v:"evil",d:"<em class='em'>行惡比一切在他以前的更甚</em>。娶<span class='sin'>耶洗別</span>，為巴力築壇建廟、立亞舍拉；霸奪拿伯的葡萄園、殺其命。先知<em class='em'>以利亞</em>於迦密山與之對抗。",ref:"王上 16–22"},
+ {o:8,n:"亞哈謝",en:"Ahaziah",y:"2",s:853,e:852,bc:"約853–852",v:"evil",d:"事奉巴力如其父母。病時<span class='sin'>求問以革倫的神巴力西卜</span>，遭以利亞責言，必死在床上。",ref:"王下 1"},
+ {o:9,n:"約蘭（耶何蘭）",en:"Joram",y:"12",s:852,e:841,bc:"約852–841",v:"evil",d:"除父親所造的巴力柱像，卻仍不離耶羅波安的罪。<em class='em'>以利沙</em>行神蹟時期。被耶戶射殺，屍拋拿伯的田。",ref:"王下 3–9"},
+ {o:10,n:"耶戶",en:"Jehu",y:"28",s:841,e:814,bc:"約841–814",v:"mixed",d:"奉膏興起，<em class='em'>剿滅亞哈全家、殺耶洗別、盡除巴力崇拜與廟</em>；同日亦誅猶大王亞哈謝。蒙應許四代坐位。然<span class='sin'>仍不離金牛犢的罪</span>。",ref:"王下 9–10"},
+ {o:11,n:"約哈斯",en:"Jehoahaz",y:"17",s:814,e:798,bc:"約814–798",v:"evil",d:"行耶羅波安的罪。<span class='sin'>受亞蘭王哈薛的欺壓</span>；懇求耶和華，蒙賜拯救者暫得喘息。",ref:"王下 13"},
+ {o:12,n:"約阿施",en:"Jehoash",y:"16",s:798,e:782,bc:"約798–782",v:"evil",d:"仍行耶羅波安的罪。<em class='em'>探望垂死的以利沙</em>，射箭得勝亞蘭的預言，三次擊敗亞蘭、收復失地。",ref:"王下 13"},
+ {o:13,n:"耶羅波安二世",en:"Jeroboam II",y:"41",s:793,e:753,bc:"約793–753",v:"evil",d:"在位最久、國勢最盛的北國王，<em class='em'>收復失地、疆域大展</em>。然<span class='sin'>仍行使以色列陷在罪裡的惡</span>——阿摩司、何西阿於此時發預言。",ref:"王下 14"},
+ {o:14,n:"撒迦利雅",en:"Zechariah",y:"6個月",s:753,e:752,bc:"約753",v:"evil",d:"耶戶第四代。作王六月即被沙龍當眾刺殺——<em class='em'>耶和華對耶戶「四代」之言應驗</em>，暗利／耶戶王朝告終。",ref:"王下 15"},
+ {o:15,n:"沙龍",en:"Shallum",y:"1個月",s:752,e:752,bc:"約752",v:"evil",d:"弒君篡位，作王僅一月，隨即被米拿現所殺。",ref:"王下 15"},
+ {o:16,n:"米拿現",en:"Menahem",y:"10",s:752,e:742,bc:"約752–742",v:"evil",d:"手段殘暴（<span class='sin'>剖開孕婦</span>）。<span class='sin'>向亞述王普勒進貢千他連得銀子</span>以穩固王位，開北國臣服亞述之端。",ref:"王下 15"},
+ {o:17,n:"比加轄",en:"Pekahiah",y:"2",s:742,e:740,bc:"約742–740",v:"evil",d:"米拿現之子，行耶羅波安的罪。被軍長比加率黨在宮中殺害。",ref:"王下 15"},
+ {o:18,n:"比加",en:"Pekah",y:"20",s:740,e:732,bc:"約740–732",v:"evil",d:"篡位。其時<span class='sin'>亞述王提革拉毗列色擄掠北境與加利利</span>，將百姓擄往亞述。後被何細亞所殺。",ref:"王下 15"},
+ {o:19,n:"何細亞",en:"Hoshea",y:"9",s:732,e:722,bc:"約732–722",v:"evil",d:"北國末王。<span class='sin'>背叛亞述、暗通埃及</span>，被亞述王圍撒瑪利亞三年而破，<em class='em'>以色列亡國被擄</em>。",ref:"王下 17"},
 ];
 const PROPHETS=[
  {n:"以利亞",k:"Elijah · 亞哈～亞哈謝時",d:"迦密山獨對巴力眾先知，求火降下顯明耶和華是神；斥責亞哈奪拿伯之罪；乘旋風火車升天。"},
  {n:"以利沙",k:"Elisha · 約蘭～約阿施時",d:"承接以利亞加倍的靈，行諸多神蹟：分約但河、醫乃縵、使婦人油增、預言亞蘭敗退。"},
  {n:"亞希雅",k:"Ahijah · 所羅門末～耶羅波安",d:"示羅人，撕新衣為十二片，預言國必分裂、耶羅波安得十支派；後又預言耶羅波安家滅絕。"},
  {n:"米該雅",k:"Micaiah · 亞哈時",d:"唯一敢逆四百假先知、預言亞哈必陣亡於拉末的先知，雖被下監仍直言真話。"},
- {n:"約拿",k:"Jonah · 耶羅波安二世時",d:"預言以色列收復疆界得應驗；即受差往尼尼微傳警戒之信息的那位先知。"},
+ {n:"約拿",k:"Jonah · 耶羅波安二世時",d:"預言以色列收復疆界得應驗；即受差往尼尼微傳警戒信息的那位先知。"},
 ];
 
-function card(k,side){
-  const t=(k.tags||[]).map(x=>{
-    let cls='tag';
-    if(/政變|篡位|末王|終/.test(x))cls+=' coup';
-    else if(/先知/.test(x))cls+=' prophet';
-    else if(/王朝|大衛|復興|建撒瑪利亞|亞述/.test(x))cls+=' dynasty';
-    return `<span class="${cls}">${x}</span>`;
-  }).join('');
-  const vmap={right:['v-right','行耶和華眼中看為正'],evil:['v-evil','行耶和華眼中看為惡'],mixed:['v-mixed','行正，但…']};
-  const vv=vmap[k.v];
-  return `<article class="king" data-v="${k.v}">
-    <div class="row1">
-      <span class="ord">${k.o}</span>
-      <span class="kname">${k.n}</span>
-      <span class="ken">${k.en}</span>
-    </div>
-    <div class="meta">
-      <span class="reign"><span class="yrs">${k.y}</span><span class="u">年</span></span>
-      <span class="bc">${k.bc}</span>
-      <span class="verdict ${vv[0]}">${vv[1]}</span>
-    </div>
-    <p class="deed">${k.d}</p>
-    ${t?`<div class="tags">${t}</div>`:''}
-    <div class="ref">${k.ref}</div>
-  </article>`;
+/* ── 時間軸幾何 ── */
+const TOP=931, BOT=586, SCALE=6.0;        // 每主前 1 年 = 6px
+const H=(TOP-BOT)*SCALE;
+const yPx = yr => (TOP-yr)*SCALE;
+
+const track=document.getElementById('track');
+track.style.height=H+'px';
+
+/* 年代格線 */
+[900,850,800,750,700,650,600].forEach(yr=>{
+  const g=document.createElement('div');g.className='grid-line';g.style.top=yPx(yr)+'px';
+  g.innerHTML=`<span class="yl">主前 ${yr}</span>`;track.appendChild(g);
+});
+/* 中央軸線 */
+const ax=document.createElement('div');ax.className='axis';track.appendChild(ax);
+
+/* 先知服事時期（中央） */
+[{n:"以利亞",s:873,e:852},{n:"以利沙",s:852,e:797}].forEach(p=>{
+  const d=document.createElement('div');d.className='pspan';
+  d.style.top=yPx(p.s)+'px';d.style.height=(yPx(p.e)-yPx(p.s))+'px';
+  d.innerHTML=`<span class="pl">先知 ${p.n}</span>`;track.appendChild(d);
+});
+
+/* 重點事件橫線 */
+[{c:'coup',yr:841,t:'耶戶政變 · 同誅南北二王'},
+ {c:'fall722',yr:722,t:'主前 722 · 撒瑪利亞陷落，以色列亡於亞述'},
+ {c:'fall586',yr:586,t:'主前 586 · 耶路撒冷被焚，猶大亡於巴比倫'}].forEach(e=>{
+  const d=document.createElement('div');d.className='ev '+e.c;d.style.top=yPx(e.yr)+'px';
+  d.innerHTML=`<div class="line"></div><div class="badge">${e.t}</div>`;track.appendChild(d);
+});
+
+/* 以色列被擄後的空白（顯示北國已亡、南國獨存） */
+const ex=document.createElement('div');ex.className='exile';
+ex.style.top=yPx(722)+'px';ex.style.height=(yPx(586)-yPx(722))+'px';
+ex.innerHTML='北國已被擄於亞述<br>南國猶大獨存 136 年';
+
+/* 建立兩國車道與王方塊 */
+function buildLane(data,side){
+  const lane=document.createElement('div');lane.className='lane '+side;lane.style.height=H+'px';
+  data.forEach(k=>{
+    const top=yPx(k.s), h=Math.max((yPx(k.e)-yPx(k.s)),3);
+    const el=document.createElement('div');
+    el.className='king'+(h<30?' tiny':'')+(h<15?' mini':'');
+    el.dataset.v=k.v;el.dataset.side=side;
+    el.style.top=top+'px';el.style.height=h+'px';
+    el.setAttribute('tabindex','0');
+    el.setAttribute('role','button');
+    el.setAttribute('aria-label',`${k.n}，作王${k.y}年，${vtext(k.v)}`);
+    el.innerHTML=`<span class="kn">${k.n}</span><span class="ky">${k.y}年 · ${k.bc}</span>`;
+    el.addEventListener('click',()=>select(el,k,side));
+    el.addEventListener('mouseenter',()=>show(k,side));
+    el.addEventListener('focus',()=>select(el,k,side));
+    lane.appendChild(el);
+  });
+  return lane;
 }
-document.getElementById('col-j').innerHTML=JUDAH.map(k=>card(k,'j')).join('');
-document.getElementById('col-i').innerHTML=ISRAEL.map(k=>card(k,'i')).join('');
+function vtext(v){return v==='right'?'行耶和華眼中看為正':v==='evil'?'行耶和華眼中看為惡':'行正，但有虧欠'}
+
+/* 以色列車道：先放被擄空白，再放王方塊（同一車道） */
+const iLane=buildLane(ISRAEL,'i');iLane.appendChild(ex);
+track.appendChild(buildLane(JUDAH,'j'));
+track.appendChild(iLane);
+
+/* 詳情面板 */
+const panel=document.getElementById('detail');
+let activeEl=null;
+function render(k,side){
+  const vc={right:'v-right',evil:'v-evil',mixed:'v-mixed'}[k.v];
+  panel.classList.remove('hint');
+  panel.innerHTML=`
+    <div class="dtop"><span class="dord ${side}">${side==='j'?'猶大':'以色列'} · ${k.o}</span>
+      <span class="dn">${k.n}</span><span class="den">${k.en}</span></div>
+    <div class="dmeta"><span class="dyrs">${k.y}</span><span class="du">年在位</span>
+      <span class="dbc">${k.bc}</span><span class="verdict ${vc}">${vtext(k.v)}</span></div>
+    <p class="dd">${k.d}</p><div class="dref">${k.ref}</div>`;
+}
+function show(k,side){ if(!activeEl) render(k,side); }   // hover 僅在未鎖定時預覽
+function select(el,k,side){
+  if(activeEl)activeEl.classList.remove('active');
+  activeEl=el;el.classList.add('active');render(k,side);
+}
+
+/* 建立先知卡 */
 document.getElementById('pgrid').innerHTML=PROPHETS.map(p=>
   `<div class="pcard"><div class="pn">${p.n}</div><div class="pk">${p.k}</div><p>${p.d}</p></div>`).join('');
 
+/* 篩選 */
 const chips=[...document.querySelectorAll('.chip')];
 chips.forEach(c=>c.addEventListener('click',()=>{
   chips.forEach(x=>x.setAttribute('aria-pressed','false'));
   c.setAttribute('aria-pressed','true');
   const f=c.dataset.filter;
-  document.querySelectorAll('.king').forEach(k=>{
-    k.classList.toggle('dim', f!=='all' && k.dataset.v!==f);
-  });
+  document.querySelectorAll('.king').forEach(k=>k.classList.toggle('dim',f!=='all'&&k.dataset.v!==f));
 }));
 </script>
