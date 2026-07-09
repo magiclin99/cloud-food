@@ -1,0 +1,442 @@
+<title>列王紀 · 立體人物關係知識圖譜</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ground:#e9e4d8; --panel:#f2ede2; --ink:#221d15; --ink-soft:#5b5344; --ink-faint:#8a806c;
+    --rule:#cdc4b0; --gold:#b0812f;
+    --judah:#2b4c8f; --israel:#a85e2e; --prophet:#b0812f; --person:#7a5aa0; --power:#9c3a2c; --root:#6b6256;
+    --right:#4f6b3a; --evil:#a3402f; --mixed:#a9822f;
+    --serif:"Palatino Linotype","Book Antiqua",Palatino,"Songti TC","Noto Serif CJK TC","Source Han Serif TC",Georgia,serif;
+    --sans:"PingFang TC","Helvetica Neue","Segoe UI",system-ui,"Noto Sans CJK TC",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--ground:#12100c;--panel:#1d1913;--ink:#ece4d2;--ink-soft:#b3a88f;--ink-faint:#847a64;--rule:#39311f;--gold:#d0a24a;
+      --judah:#6f8fe0;--israel:#e0954f;--prophet:#d8ab4a;--person:#a785d6;--power:#e0664f;--root:#9a9082;
+      --right:#9cb37e;--evil:#e08a72;--mixed:#d6ac52;}
+  }
+  :root[data-theme="light"]{--ground:#e9e4d8;--panel:#f2ede2;--ink:#221d15;--ink-soft:#5b5344;--ink-faint:#8a806c;--rule:#cdc4b0;
+    --judah:#2b4c8f;--israel:#a85e2e;--prophet:#b0812f;--person:#7a5aa0;--power:#9c3a2c;--root:#6b6256;
+    --right:#4f6b3a;--evil:#a3402f;--mixed:#a9822f;}
+  :root[data-theme="dark"]{--ground:#12100c;--panel:#1d1913;--ink:#ece4d2;--ink-soft:#b3a88f;--ink-faint:#847a64;--rule:#39311f;--gold:#d0a24a;
+    --judah:#6f8fe0;--israel:#e0954f;--prophet:#d8ab4a;--person:#a785d6;--power:#e0664f;--root:#9a9082;
+    --right:#9cb37e;--evil:#e08a72;--mixed:#d6ac52;}
+
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--ground);color:var(--ink);font-family:var(--serif);overflow:hidden}
+  .app{display:flex;flex-direction:column;height:100vh}
+
+  header{padding:14px 22px 12px;border-bottom:1px solid var(--rule);flex:0 0 auto}
+  .eyebrow{font-family:var(--sans);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 5px}
+  header h1{margin:0;font-size:1.4rem;font-weight:600;letter-spacing:.02em}
+  header h1 b{color:var(--gold);font-style:italic;font-weight:600}
+  header .hint{font-family:var(--sans);font-size:.76rem;color:var(--ink-soft);margin:5px 0 0}
+
+  .stage{flex:1 1 auto;position:relative;overflow:hidden}
+  canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+  canvas:active{cursor:grabbing}
+
+  /* legend / controls overlay */
+  .legend{position:absolute;top:12px;left:12px;background:color-mix(in srgb,var(--panel) 88%,transparent);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;backdrop-filter:blur(4px);max-width:230px;font-family:var(--sans)}
+  .legend .lt{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 7px}
+  .legend .grp+.grp{margin-top:11px}
+  .lrow{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--ink-soft);cursor:pointer;padding:2px 0;user-select:none}
+  .lrow input{display:none}
+  .lrow .nd{width:12px;height:12px;border-radius:50%;flex:0 0 auto;border:1.5px solid transparent}
+  .lrow.off{opacity:.36;text-decoration:line-through}
+  .ledge{display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--ink-soft);padding:1px 0}
+  .ln{width:20px;height:0;border-top-width:2.5px;border-top-style:solid;flex:0 0 auto}
+
+  .tools{position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+  .btn{font-family:var(--sans);font-size:.76rem;cursor:pointer;border:1px solid var(--rule);background:color-mix(in srgb,var(--panel) 88%,transparent);color:var(--ink-soft);padding:7px 12px;border-radius:20px;backdrop-filter:blur(4px);transition:.15s}
+  .btn:hover{border-color:var(--ink-faint);color:var(--ink)}
+  .btn[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  /* detail panel */
+  .detail{position:absolute;left:12px;bottom:12px;width:320px;max-width:calc(100vw - 24px);background:color-mix(in srgb,var(--panel) 94%,transparent);border:1px solid var(--rule);border-radius:10px;padding:15px 17px;backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.18);font-family:var(--sans)}
+  .detail .dcat{display:inline-flex;align-items:center;gap:6px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .detail .dcat .dd{width:9px;height:9px;border-radius:50%}
+  .detail h3{margin:6px 0 2px;font-family:var(--serif);font-size:1.24rem;font-weight:600}
+  .detail .den{font-size:.72rem;color:var(--ink-faint)}
+  .detail .verdict{display:inline-block;font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:3px;margin:8px 0 0}
+  .v-right{color:var(--right);background:color-mix(in srgb,var(--right) 18%,transparent)}
+  .v-evil{color:var(--evil);background:color-mix(in srgb,var(--evil) 18%,transparent)}
+  .v-mixed{color:var(--mixed);background:color-mix(in srgb,var(--mixed) 18%,transparent)}
+  .detail .note{font-family:var(--serif);font-size:.9rem;color:var(--ink-soft);line-height:1.5;margin:9px 0 0}
+  .detail .rels{margin:11px 0 0;border-top:1px solid var(--rule);padding-top:9px}
+  .detail .rels .rt{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+  .detail .rel{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink-soft);padding:2px 0;cursor:pointer;border-radius:4px}
+  .detail .rel:hover{color:var(--ink)}
+  .detail .rel .rc{width:16px;height:0;border-top-width:2px;border-top-style:solid;flex:0 0 auto}
+  .detail .rel .rn{font-weight:600;color:var(--ink)}
+  .detail.hint .note{color:var(--ink-faint)}
+  .detail .close{position:absolute;top:10px;right:12px;cursor:pointer;color:var(--ink-faint);font-size:1.1rem;line-height:1;border:none;background:none}
+  @media (max-width:560px){.legend{max-width:170px;padding:9px 10px}.detail{width:auto;left:8px;right:8px;bottom:8px}}
+</style>
+
+<div class="app">
+  <header>
+    <p class="eyebrow">列王紀上下 · Knowledge Graph</p>
+    <h1>南北列王 <b>立體</b>人物關係知識圖譜</h1>
+    <p class="hint">拖曳旋轉 · 滾輪縮放 · 點節點看事蹟與關係。藍＝猶大、橙＝以色列、金＝先知、紫＝關鍵人物、紅＝外邦強權。</p>
+  </header>
+  <div class="stage">
+    <canvas id="cv"></canvas>
+
+    <div class="legend">
+      <div class="grp">
+        <p class="lt">節點類別（點擊可隱藏）</p>
+        <label class="lrow" data-cat="judah"><input type="checkbox" checked><span class="nd" style="background:var(--judah)"></span>猶大君王（南）</label>
+        <label class="lrow" data-cat="israel"><input type="checkbox" checked><span class="nd" style="background:var(--israel)"></span>以色列君王（北）</label>
+        <label class="lrow" data-cat="prophet"><input type="checkbox" checked><span class="nd" style="background:var(--prophet)"></span>先知</label>
+        <label class="lrow" data-cat="person"><input type="checkbox" checked><span class="nd" style="background:var(--person)"></span>關鍵人物</label>
+        <label class="lrow" data-cat="power"><input type="checkbox" checked><span class="nd" style="background:var(--power)"></span>外邦強權</label>
+      </div>
+      <div class="grp">
+        <p class="lt">關係（連線）</p>
+        <div class="ledge"><span class="ln" style="border-color:#c46a9a"></span>婚姻 · 親屬</div>
+        <div class="ledge"><span class="ln" style="border-color:#4f7d4a"></span>結盟</div>
+        <div class="ledge"><span class="ln" style="border-color:#b8402f"></span>弒殺 · 篡奪</div>
+        <div class="ledge"><span class="ln" style="border-color:var(--gold);border-top-style:dashed"></span>先知對王</div>
+        <div class="ledge"><span class="ln" style="border-color:#8a3a2f;border-top-style:dashed"></span>外邦強權</div>
+      </div>
+    </div>
+
+    <div class="tools">
+      <button class="btn" id="reset">重設視角</button>
+      <button class="btn" id="rotate" aria-pressed="true">自轉 ⏸</button>
+    </div>
+
+    <aside class="detail hint" id="detail">
+      <p class="note">點選任一個節點，這裡會顯示他的身分、重點事蹟（含耶和華看為罪的事），以及與其他人物的關係。也可從關係清單點進相連的人物。</p>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ───────────── 資料：節點 ───────────── */
+// 猶大君王 [id,名,定論,事蹟]
+const JK=[
+ ["rehoboam","羅波安","evil","國因他分裂；築邱壇柱像；埃及示撒奪聖殿寶物。"],
+ ["abijam","亞比央","evil","行父親的罪，心不像大衛。"],
+ ["asa","亞撒","mixed","除偶像、廢太后瑪迦；晚年倚靠亞蘭王而非耶和華。"],
+ ["jehoshaphat","約沙法","mixed","尋求耶和華，境內平安；卻與亞哈家聯姻結盟。"],
+ ["jehoram_j","約蘭","evil","娶亞哈女兒，行以色列諸王的道。"],
+ ["ahaziah_j","亞哈謝","evil","隨亞哈家行惡；耶戶除滅亞哈家時被殺。"],
+ ["athaliah","亞他利雅","evil","亞哈之女；剿滅王室後裔，篡位作王六年。"],
+ ["joash_j","約阿施","mixed","耶何耶大在世時修殿行正；其死後拜偶像、殺撒迦利亞。"],
+ ["amaziah","亞瑪謝","mixed","行正卻拜以東神；驕傲挑戰以色列而大敗。"],
+ ["uzziah","烏西雅","mixed","國勢強盛；擅入聖殿燒香，長大痲瘋直到死日。"],
+ ["jotham","約坦","mixed","行正，建聖殿上門；只是邱壇仍未廢去。"],
+ ["ahaz","亞哈斯","evil","使兒子經火；仿大馬士革壇改造聖殿，求亞述相助。"],
+ ["hezekiah","希西家","right","除邱壇、打碎銅蛇；倚靠耶和華，抵抗亞述蒙拯救。"],
+ ["manasseh","瑪拿西","evil","最惡的猶大王；拜天象、使兒子經火、流無辜人血。"],
+ ["amon","亞們","evil","行父親瑪拿西的惡；被臣僕所殺。"],
+ ["josiah","約西亞","right","發現律法書、大復興、除盡偶像、重守逾越節。"],
+ ["jehoahaz_j","約哈斯","evil","作王三月，被埃及尼哥廢黜擄去。"],
+ ["jehoiakim","約雅敬","evil","巴比倫第一次來犯，擄掠聖殿器皿與貴胄。"],
+ ["jehoiachin","約雅斤","evil","作王三月，與眾民、匠人被擄至巴比倫。"],
+ ["zedekiah","西底家","evil","背叛巴比倫；聖殿與耶路撒冷被焚，猶大亡國。"],
+];
+// 以色列君王
+const IK=[
+ ["jeroboam1","耶羅波安一世","evil","鑄兩金牛犢立於伯特利和但，使以色列陷在罪裡。"],
+ ["nadab","拿答","evil","行父親的罪；被巴沙所殺。"],
+ ["baasha","巴沙","evil","篡位，殺盡耶羅波安全家；自己仍行其罪。"],
+ ["elah","以拉","evil","在家宰家中喝醉時，被心利所殺。"],
+ ["zimri","心利","evil","作王僅七日，見城被圍焚宮自焚。"],
+ ["omri","暗利","evil","建撒瑪利亞為國都；行惡比他以前的更甚。"],
+ ["ahab","亞哈","evil","行惡最甚；娶耶洗別拜巴力；奪拿伯葡萄園殺其命。"],
+ ["ahaziah_i","亞哈謝","evil","求問以革倫的神巴力西卜，遭以利亞責言。"],
+ ["joram_i","約蘭","evil","除巴力柱像卻仍行罪；以利沙時期；被耶戶射殺。"],
+ ["jehu","耶戶","mixed","剿滅亞哈全家、盡除巴力崇拜；卻仍不離金牛犢。"],
+ ["jehoahaz_i","約哈斯","evil","受亞蘭王哈薛欺壓；求耶和華得暫時喘息。"],
+ ["jehoash_i","約阿施","evil","探望垂死的以利沙；三次擊敗亞蘭收復失地。"],
+ ["jeroboam2","耶羅波安二世","evil","國勢最盛、收復失地；仍行使以色列陷在罪裡的惡。"],
+ ["zechariah","撒迦利雅","evil","耶戶第四代；作王六月被沙龍刺殺，王朝告終。"],
+ ["shallum","沙龍","evil","弒君篡位，作王僅一月被米拿現所殺。"],
+ ["menahem","米拿現","evil","手段殘暴；向亞述進貢千他連得銀子穩固王位。"],
+ ["pekahiah","比加轄","evil","米拿現之子；被軍長比加率黨殺害。"],
+ ["pekah","比加","evil","篡位；亞述提革拉毗列色擄掠北境；被何細亞所殺。"],
+ ["hoshea","何細亞","evil","末王；背叛亞述，撒瑪利亞陷落，以色列亡國被擄。"],
+];
+const PROPHETS=[
+ ["elijah","以利亞","迦密山獨對巴力眾先知，求火降下；斥責亞哈奪拿伯之罪；乘旋風升天。"],
+ ["elisha","以利沙","承接以利亞加倍的靈，行諸多神蹟：分約但河、醫乃縵、預言亞蘭敗退。"],
+ ["ahijah","亞希雅","示羅人；撕新衣預言國分裂、耶羅波安得十支派。"],
+ ["micaiah","米該雅","唯一敢逆四百假先知，預言亞哈必陣亡於拉末。"],
+ ["jonah","約拿","預言以色列收復疆界得應驗；受差往尼尼微的那位先知。"],
+ ["isaiah","以賽亞","在希西家時傳耶和華的話，預言亞述必無功而退。"],
+ ["huldah","戶勒大","女先知；向約西亞證實律法書所載的審判必臨。"],
+];
+const PERSONS=[
+ ["jezebel","耶洗別","西頓公主，亞哈之妻，強力推行巴力崇拜、殺害耶和華先知。"],
+ ["jehoiada","耶何耶大","祭司；暗藏約阿施七年，後起兵推翻並處死亞他利雅。"],
+ ["naaman","乃縵","亞蘭軍元帥，長大痲瘋，經以利沙指示於約但河得潔淨。"],
+ ["naboth","拿伯","耶斯列人，葡萄園被亞哈垂涎，遭耶洗別設計殺害奪佔。"],
+];
+const POWERS=[
+ ["egypt","埃及","示撒奪聖殿寶物；法老尼哥廢約哈斯、陣殺約西亞。"],
+ ["aram","亞蘭（大馬士革）","便哈達、哈薛屢次攻擊、欺壓以色列。"],
+ ["assyria","亞述","擄掠北境、受米拿現進貢，終攻陷撒瑪利亞滅以色列（722）。"],
+ ["babylon","巴比倫","尼布甲尼撒擄掠猶大、焚燬聖殿與耶路撒冷（586）。"],
+ ["sidon","西頓（腓尼基）","耶洗別的故國，巴力與亞舍拉崇拜之源。"],
+];
+
+/* ───────────── 資料：關係（邊）───────────── */
+// [a, b, type, rel]  type: kin/ally/kill/prophet/foreign/origin/mem
+const REL=[
+ // 分國本源
+ ["solomon","rehoboam","origin","子·猶大首王"],
+ ["solomon","jeroboam1","origin","臣僕·以色列首王"],
+ // 婚姻 · 親屬
+ ["ahab","jezebel","kin","娶（西頓公主）"],
+ ["jezebel","sidon","kin","出於西頓"],
+ ["ahab","athaliah","kin","女兒"],
+ ["jehoram_j","athaliah","kin","娶亞哈之女"],
+ ["ahaziah_j","athaliah","kin","母子"],
+ // 結盟
+ ["jehoshaphat","ahab","ally","聯姻結盟·同攻拉末"],
+ // 弒殺 · 篡奪
+ ["baasha","nadab","kill","篡位擊殺"],
+ ["baasha","jeroboam1","kill","滅其全家"],
+ ["zimri","elah","kill","弒君"],
+ ["omri","zimri","kill","討滅自立"],
+ ["jehu","joram_i","kill","射殺（以色列王）"],
+ ["jehu","ahaziah_j","kill","追殺（猶大王）"],
+ ["jehu","jezebel","kill","處死"],
+ ["jehu","ahab","kill","滅亞哈全家"],
+ ["shallum","zechariah","kill","弒君"],
+ ["menahem","shallum","kill","弒君"],
+ ["pekah","pekahiah","kill","弒君"],
+ ["hoshea","pekah","kill","弒君"],
+ ["athaliah","joash_j","kill","欲殺·未果"],
+ ["jehoiada","athaliah","kill","起兵推翻處死"],
+ ["ahab","naboth","kill","奪園殺命"],
+ // 先知對王
+ ["ahijah","solomon","prophet","預言國必分裂"],
+ ["ahijah","jeroboam1","prophet","預言得十支派"],
+ ["elijah","ahab","prophet","迦密山對抗"],
+ ["elijah","jezebel","prophet","對抗巴力崇拜"],
+ ["elijah","ahaziah_i","prophet","責其求問偶像"],
+ ["elisha","jehu","prophet","膏立（藉門徒）"],
+ ["elisha","aram","prophet","預言哈薛作亞蘭王"],
+ ["elisha","naaman","prophet","醫治痲瘋"],
+ ["elisha","joram_i","prophet","多次相助以色列"],
+ ["elisha","jehoash_i","prophet","臨終受訪·射箭之兆"],
+ ["micaiah","ahab","prophet","預言陣亡於拉末"],
+ ["jonah","jeroboam2","prophet","預言收復疆界"],
+ ["isaiah","hezekiah","prophet","傳話·預言得醫治"],
+ ["huldah","josiah","prophet","證實審判預言"],
+ // 外邦強權
+ ["egypt","rehoboam","foreign","奪聖殿寶物"],
+ ["egypt","jehoahaz_j","foreign","廢黜擄去"],
+ ["egypt","josiah","foreign","陣殺於米吉多"],
+ ["aram","jehoahaz_i","foreign","欺壓"],
+ ["aram","joram_i","foreign","交戰圍城"],
+ ["aram","jehoash_i","foreign","三度敗於以色列"],
+ ["assyria","menahem","foreign","受其進貢"],
+ ["assyria","pekah","foreign","擄掠北境"],
+ ["assyria","hoshea","foreign","攻陷撒瑪利亞·滅國"],
+ ["assyria","hezekiah","foreign","圍攻·無功而退"],
+ ["babylon","jehoiakim","foreign","第一次來犯"],
+ ["babylon","jehoiachin","foreign","擄去巴比倫"],
+ ["babylon","zedekiah","foreign","焚城·擄民·亡國"],
+];
+
+/* ───────────── 建立節點索引 ───────────── */
+const CAT={judah:"var(--judah)",israel:"var(--israel)",prophet:"var(--prophet)",person:"var(--person)",power:"var(--power)",root:"var(--root)"};
+const VCOL={right:"var(--right)",evil:"var(--evil)",mixed:"var(--mixed)"};
+const nodes=[], byId={};
+function add(id,label,cat,note,extra){const n={id,label,cat,note,...(extra||{})};nodes.push(n);byId[id]=n;return n;}
+add("solomon","所羅門","root","晚年隨從妃嬪的偶像，心偏離耶和華，招致國度分裂。");
+add("JUD","猶大 · 南國","judah","大衛家一脈，都耶路撒冷，共 20 王。",{hub:1});
+add("ISR","以色列 · 北國","israel","九個王朝更替，都撒瑪利亞，共 19 王，全數行惡。",{hub:1});
+JK.forEach(k=>add(k[0],k[1],"judah",k[3],{v:k[2],kingdom:"JUD"}));
+IK.forEach(k=>add(k[0],k[1],"israel",k[3],{v:k[2],kingdom:"ISR"}));
+PROPHETS.forEach(p=>add(p[0],p[1],"prophet",p[2]));
+PERSONS.forEach(p=>add(p[0],p[1],"person",p[2]));
+POWERS.forEach(p=>add(p[0],p[1],"power",p[2]));
+
+// 補上君王—國度歸屬邊 + 國度—所羅門
+const edges=[["solomon","JUD","origin","分國"],["solomon","ISR","origin","分國"]];
+JK.forEach(k=>edges.push([k[0],"JUD","mem",""]));
+IK.forEach(k=>edges.push([k[0],"ISR","mem",""]));
+REL.forEach(e=>edges.push(e));
+// 過濾掉指向不存在節點的邊，建立鄰接
+const E=edges.filter(e=>byId[e[0]]&&byId[e[1]]).map(e=>({a:byId[e[0]],b:byId[e[1]],t:e[2],rel:e[3]}));
+const adj={}; nodes.forEach(n=>adj[n.id]=[]);
+E.forEach(e=>{adj[e.a.id].push({o:e.b,t:e.t,rel:e.rel,dir:1});adj[e.b.id].push({o:e.a,t:e.t,rel:e.rel,dir:-1});});
+
+const EDGE_STYLE={
+ mem:{c:"rgba(140,128,104,.28)",w:1,dash:0},
+ origin:{c:"var(--root)",w:2,dash:0},
+ kin:{c:"#c46a9a",w:2,dash:0},
+ ally:{c:"#4f7d4a",w:2.4,dash:0},
+ kill:{c:"#b8402f",w:2.2,dash:0},
+ prophet:{c:"var(--gold)",w:2,dash:6},
+ foreign:{c:"#9c3a2c",w:2,dash:6},
+};
+const REL_LABEL={mem:"屬國",origin:"分國",kin:"婚姻·親屬",ally:"結盟",kill:"弒殺·篡奪",prophet:"先知對王",foreign:"外邦強權"};
+
+/* ───────────── 3D 力導向佈局 ───────────── */
+let seed=20260709;
+const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+nodes.forEach(n=>{const r=140+rnd()*40,th=rnd()*6.283,ph=Math.acos(2*rnd()-1);
+  n.x=r*Math.sin(ph)*Math.cos(th);n.y=r*Math.sin(ph)*Math.sin(th);n.z=r*Math.cos(ph);
+  n.vx=n.vy=n.vz=0;n.deg=adj[n.id].length;});
+function baseR(n){return n.hub?15:n.cat==="root"?13:n.cat==="power"?12:n.cat==="prophet"?9.5:n.cat==="person"?8.5:8;}
+
+function physics(){
+ const KR=3400, KS=0.02, CG=0.006, DMP=0.86;
+ for(let i=0;i<nodes.length;i++){const a=nodes[i];if(a.hidden)continue;
+   for(let j=i+1;j<nodes.length;j++){const b=nodes[j];if(b.hidden)continue;
+     let dx=a.x-b.x,dy=a.y-b.y,dz=a.z-b.z,d2=dx*dx+dy*dy+dz*dz+.01,d=Math.sqrt(d2);
+     const f=KR/d2/d;a.vx+=dx*f;a.vy+=dy*f;a.vz+=dz*f;b.vx-=dx*f;b.vy-=dy*f;b.vz-=dz*f;}}
+ E.forEach(e=>{const a=e.a,b=e.b;if(a.hidden||b.hidden)return;
+   const rest=e.t==="mem"?58:e.t==="origin"?70:88;
+   let dx=b.x-a.x,dy=b.y-a.y,dz=b.z-a.z,d=Math.sqrt(dx*dx+dy*dy+dz*dz)+.01,f=(d-rest)*KS/d;
+   a.vx+=dx*f;a.vy+=dy*f;a.vz+=dz*f;b.vx-=dx*f;b.vy-=dy*f;b.vz-=dz*f;});
+ nodes.forEach(n=>{if(n.hidden)return;
+   n.vx-=n.x*CG;n.vy-=n.y*CG;n.vz-=n.z*CG;
+   n.vx*=DMP;n.vy*=DMP;n.vz*=DMP;
+   const sp=Math.hypot(n.vx,n.vy,n.vz);if(sp>9){const s=9/sp;n.vx*=s;n.vy*=s;n.vz*=s;}
+   n.x+=n.vx;n.y+=n.vy;n.z+=n.vz;});
+}
+
+/* ───────────── 畫布 / 相機 ───────────── */
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+let W=0,H=0,dpr=1;
+function resize(){dpr=Math.min(devicePixelRatio||1,2);const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+addEventListener("resize",resize);
+
+let rotX=-0.35,rotY=0.5,zoom=1;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||v;}
+function col(c){return c.startsWith("var(")?css(c.slice(4,-1)):c;}
+
+let hover=null,selected=null,neighborSet=null;
+function computeNeighbors(n){const s=new Set([n.id]);adj[n.id].forEach(a=>s.add(a.o.id));return s;}
+
+function project(){
+ const cy=Math.cos(rotY),sy=Math.sin(rotY),cx=Math.cos(rotX),sx=Math.sin(rotX),FOV=780;
+ nodes.forEach(n=>{
+   const x1=n.x*cy-n.z*sy, z1=n.x*sy+n.z*cy;
+   const y2=n.y*cx-z1*sx, z2=n.y*sx+z1*cx;
+   const sc=FOV/(FOV-z2)*zoom;
+   n.sx=W/2+x1*sc; n.sy=H/2+y2*sc; n.sc=sc; n.zz=z2;
+ });
+}
+
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ const ink=col("var(--ink)"),faint=col("var(--ink-faint)");
+ // edges
+ E.forEach(e=>{
+   if(e.a.hidden||e.b.hidden)return;
+   const st=EDGE_STYLE[e.t];
+   let alpha=1, w=st.w;
+   const active = selected? (neighborSet.has(e.a.id)&&neighborSet.has(e.b.id)) : true;
+   if(selected&&!active)alpha=e.t==="mem"?0.04:0.07;
+   else if(!selected&&e.t==="mem")alpha=1;
+   const depth=(e.a.zz+e.b.zz)/2, da=Math.max(.25,Math.min(1,(depth+260)/520));
+   ctx.globalAlpha=alpha*da;
+   ctx.strokeStyle=col(st.c);ctx.lineWidth=w*(0.6+0.5*da);
+   ctx.setLineDash(st.dash?[st.dash,st.dash]:[]);
+   ctx.beginPath();ctx.moveTo(e.a.sx,e.a.sy);ctx.lineTo(e.b.sx,e.b.sy);ctx.stroke();
+ });
+ ctx.setLineDash([]);ctx.globalAlpha=1;
+ // nodes back-to-front
+ const order=nodes.filter(n=>!n.hidden).sort((a,b)=>a.zz-b.zz);
+ order.forEach(n=>{
+   const r=baseR(n)*n.sc*0.55;
+   const dimmed = selected && !neighborSet.has(n.id);
+   const da=Math.max(.3,Math.min(1,(n.zz+260)/520));
+   ctx.globalAlpha=(dimmed?0.18:1)*da;
+   // verdict ring for kings
+   if(n.v){ctx.beginPath();ctx.arc(n.sx,n.sy,r+3,0,6.2832);ctx.fillStyle=col(VCOL[n.v]);ctx.fill();}
+   ctx.beginPath();ctx.arc(n.sx,n.sy,r,0,6.2832);
+   ctx.fillStyle=col(CAT[n.cat]);ctx.fill();
+   if(n===hover||n===selected){ctx.globalAlpha=da;ctx.lineWidth=2;ctx.strokeStyle=col("var(--gold)");ctx.stroke();}
+   // labels: hubs/powers/prophets/persons/root always; kings when hover/selected/neighbor
+   const showLabel = n.hub||n.cat==="root"||n.cat==="power"||n.cat==="prophet"||n.cat==="person"
+     || n===hover||n===selected|| (selected&&neighborSet.has(n.id));
+   if(showLabel && !dimmed){
+     ctx.globalAlpha=da;
+     const fs=Math.max(10,(n.hub?14:11)*Math.min(1.15,n.sc));
+     ctx.font=`600 ${fs}px var(--serif),serif`;
+     ctx.textAlign="center";ctx.textBaseline="top";
+     ctx.lineWidth=3;ctx.strokeStyle=col("var(--ground)");
+     ctx.strokeText(n.label,n.sx,n.sy+r+2);
+     ctx.fillStyle=(n===hover||n===selected)?col("var(--gold)"):ink;
+     ctx.fillText(n.label,n.sx,n.sy+r+2);
+   }
+ });
+ ctx.globalAlpha=1;
+}
+
+/* ───────────── 主迴圈 ───────────── */
+let autoRotate=true,dragging=false;
+function loop(){
+ for(let k=0;k<2;k++)physics();
+ if(autoRotate&&!dragging&&!selected&&!reduce)rotY+=0.0016;
+ project();draw();
+ requestAnimationFrame(loop);
+}
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+/* ───────────── 互動 ───────────── */
+let px=0,py=0,moved=0,downTime=0;
+function pick(mx,my){let best=null,bd=1e9;nodes.forEach(n=>{if(n.hidden)return;const r=baseR(n)*n.sc*0.55+6,d=Math.hypot(n.sx-mx,n.sy-my);if(d<r&&d<bd){bd=d;best=n;}});return best;}
+cv.addEventListener("pointerdown",e=>{cv.setPointerCapture(e.pointerId);dragging=true;px=e.clientX;py=e.clientY;moved=0;});
+cv.addEventListener("pointermove",e=>{
+ const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+ if(dragging){const dx=e.clientX-px,dy=e.clientY-py;moved+=Math.abs(dx)+Math.abs(dy);
+   rotY+=dx*0.008;rotX+=dy*0.008;rotX=Math.max(-1.4,Math.min(1.4,rotX));px=e.clientX;py=e.clientY;}
+ else{const h=pick(mx,my);if(h!==hover){hover=h;cv.style.cursor=h?"pointer":"grab";if(h&&!selected)showDetail(h,true);}}
+});
+cv.addEventListener("pointerup",e=>{dragging=false;
+ if(moved<5){const r=cv.getBoundingClientRect();const n=pick(e.clientX-r.left,e.clientY-r.top);
+   if(n){selectNode(n);}else{clearSel();}}
+});
+cv.addEventListener("wheel",e=>{e.preventDefault();zoom*=e.deltaY<0?1.1:0.9;zoom=Math.max(0.4,Math.min(3.2,zoom));},{passive:false});
+
+function selectNode(n){selected=n;neighborSet=computeNeighbors(n);showDetail(n,false);}
+function clearSel(){selected=null;neighborSet=null;hintDetail();}
+
+/* ───────────── 詳情面板 ───────────── */
+const detail=document.getElementById("detail");
+function catName(c){return {judah:"猶大 · 南國",israel:"以色列 · 北國",prophet:"先知",person:"關鍵人物",power:"外邦強權",root:"分國之源"}[c];}
+function vName(v){return {right:"行耶和華眼中看為正",evil:"行耶和華眼中看為惡",mixed:"行正，但有虧欠"}[v];}
+function showDetail(n,isHover){
+ detail.classList.remove("hint");
+ const rels=adj[n.id].filter(a=>!a.o.hidden);
+ rels.sort((a,b)=>a.t.localeCompare(b.t));
+ const relHtml=rels.map(a=>{const st=EDGE_STYLE[a.t];
+   return `<div class="rel" data-go="${a.o.id}"><span class="rc" style="border-color:${col(st.c)};${st.dash?'border-top-style:dashed;':''}"></span>
+     <span class="rn">${a.o.label}</span><span style="color:var(--ink-faint);font-size:.72rem">${a.rel||REL_LABEL[a.t]}</span></div>`;}).join("");
+ detail.innerHTML=`
+   ${isHover?'':'<button class="close" aria-label="關閉">×</button>'}
+   <span class="dcat"><span class="dd" style="background:${col(CAT[n.cat])}"></span>${catName(n.cat)}</span>
+   <h3>${n.label}</h3>
+   ${n.v?`<span class="verdict v-${n.v}">${vName(n.v)}</span>`:""}
+   <p class="note">${n.note}</p>
+   ${rels.length?`<div class="rels"><div class="rt">關係 · ${rels.length}</div>${relHtml}</div>`:""}`;
+ const c=detail.querySelector(".close");if(c)c.onclick=clearSel;
+ detail.querySelectorAll(".rel").forEach(el=>el.onclick=()=>{const t=byId[el.dataset.go];if(t)selectNode(t);});
+}
+function hintDetail(){detail.classList.add("hint");
+ detail.innerHTML=`<p class="note">點選任一個節點，這裡會顯示他的身分、重點事蹟（含耶和華看為罪的事），以及與其他人物的關係。也可從關係清單點進相連的人物。</p>`;}
+
+/* ───────────── 控制項 ───────────── */
+document.getElementById("reset").onclick=()=>{rotX=-0.35;rotY=0.5;zoom=1;clearSel();};
+const rotBtn=document.getElementById("rotate");
+rotBtn.onclick=()=>{autoRotate=!autoRotate;rotBtn.setAttribute("aria-pressed",autoRotate);rotBtn.textContent=autoRotate?"自轉 ⏸":"自轉 ▶";};
+document.querySelectorAll(".lrow").forEach(row=>{
+ row.addEventListener("click",e=>{e.preventDefault();const cat=row.dataset.cat,on=row.classList.toggle("off");
+   nodes.forEach(n=>{if(n.cat===cat&&!n.hub)n.hidden=!!on;});
+   if(selected&&selected.hidden)clearSel();});
+});
+
+resize();hintDetail();loop();
+</script>
